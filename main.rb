@@ -1,11 +1,19 @@
-file = File.open("teste.txt", "a");
+require_relative "book"
 
-puts "informe seu nome";
+book = Book.new(1,"José de Alencar", "Iracema", "Romance", 1865)
 
-userName = gets;
+puts "id: #{book.id}"
+puts "author: #{book.author}"
+puts "title: #{book.title}"
+puts "genre: #{book.genre}"
+puts "year: #{book.year}"
 
-puts "\nOlá, #{userName}";
+def create_file
+  if File.exist?('books.txt')
+    File.open('books.txt', 'r+')
+  else
+    File.new('books.txt', 'w+')
+  end
+end
 
-file.write(userName);
-
-file.close;
+ file = create_file
