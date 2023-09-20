@@ -8,12 +8,13 @@ def create_file
   end
 end
 
- interface = BookInterface.new
+ controller = BookInterface.new
  file = create_file
 
-#  interface.create_book(file)
-#  interface.remove_book_by_id(file)
- interface.index_books(file)
+#  controller.create_book(file)
+#  controller.remove_book_by_id(file)
+#  controller.index_books(file)
+ controller.show_book(file)
 
 
 
