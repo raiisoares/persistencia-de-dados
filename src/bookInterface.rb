@@ -18,16 +18,15 @@ class BookInterface
     puts "Livro cadastrado com sucesso!"
   end
 
-  def remover_book_by_id(file)
+  def remove_book_by_id(file)
     print "Informe o id do livro que será removido: "
     id = gets.chomp.to_i
-
+    book_removed = false
     lines = file.readlines
+
     file.rewind
     file.truncate(0)
 
-    book_removed = false
-    
     lines.each do |line|
       book_id, _, _, _, _ = line.chomp.split('|')
       if book_id.to_i != id
@@ -37,22 +36,19 @@ class BookInterface
       end
     end
 
-    if book_removed
+    if book_removed 
       puts "\nLivro removido com sucesso!\n"
     else
       puts "\nLivro não encontrado!\n"
     end
   end
+
+  def index_books(file)
+    lines = file.readlines
+      lines.each do |line|
+        puts line
+      end
+  end
+
 end
           
-
-
-
-# book = Book.new(1,"José de Alencar", "Iracema", "Romance", 1865)
-
-# puts "id: #{book.id}"
-# puts "author: #{book.author}"
-# puts "title: #{book.title}"
-# puts "genre: #{book.genre}"
-# puts "year: #{book.year}"
-

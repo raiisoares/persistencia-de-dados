@@ -1,1 +1,3 @@
 1|José de Alencar|Iracema|Romance|1865
+2|machado de assis|dom casmurro|romance|1875
+3|jose saramgo|ensaio sobre a cegueira|romance|1985
