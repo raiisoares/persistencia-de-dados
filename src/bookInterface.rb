@@ -55,26 +55,37 @@ class BookInterface
   
 
   def index_books(file)
-    lines = file.readlines
-      
-    lines.each do |line|
-      puts line
+    begin
+      books = JSON.parse(file.read)
+    rescue JSON::ParserError
+      return puts("Não há nenhum livro cadastrado no banco de dados.")
+    end
+  
+    books.each do |book|
+      puts "#{book['id']}|#{book['author']}|#{book['title']}|#{book['genre']}|#{book['year']}"
     end
   end
+  
 
   def show_book(file)
+    begin
+      books = JSON.parse(file.read)
+    rescue JSON::ParserError
+      return puts("Não há nenhum livro cadastrado no banco de dados.")
+    end
+  
     print "Informe o id do livro: "
     id = gets.chomp.to_i
-    
-    lines = file.readlines
-      
-    lines.each do |line|
-      book_id, _, _, _, _ = line.chomp.split('|')
-      if book_id.to_i == id
-        return puts line
-      end
+  
+    book_to_be_showed = books.find { |book| book['id'] == id }
+  
+    if book_to_be_showed
+      puts "#{book_to_be_showed['id']}|#{book_to_be_showed['author']}|#{book_to_be_showed['title']}|#{book_to_be_showed['genre']}|#{book_to_be_showed['year']}"
+    else
+      puts "Livro não encontrado!"
     end
   end
+  
 
   def update_book(file)
     print "Informe o id do livro que será atualizado: "
@@ -151,5 +162,16 @@ class BookInterface
     end
 
     return puts("Livro atualizado!")
-  end  
+  end 
+  
+
+
+  def verify_file(file)
+    begin
+      return books = JSON.parse(file.read)
+    rescue JSON::ParserError
+      return puts("Não há nenhum livro cadastrado no banco de dados.")
+    end
+
+  end
 end
