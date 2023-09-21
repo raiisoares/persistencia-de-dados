@@ -8,4 +8,14 @@ class Book
     @genre = genre
     @year = year
   end
+
+  def to_json
+    {
+      id: @id,
+      author: @author,
+      title: @title,
+      genre: @genre,
+      year: @year
+    }.to_json
+  end
 end

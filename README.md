@@ -17,7 +17,7 @@ Siga os passos abaixo para executar o sistema:
 3. Execute o comando `bundle` para instalar as dependências do projeto:
 
     ```
-    bundle
+    bundle install
     ```
 
 4. Agora você pode rodar o sistema utilizando o comando:

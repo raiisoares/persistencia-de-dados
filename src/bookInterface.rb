@@ -13,8 +13,8 @@ class BookInterface
     print "Ano: "
     year = gets.chomp.to_i
 
-    book = Book.new(id, author, title, genre, year)
-    file.puts("#{book.id}|#{book.author}|#{book.title}|#{book.genre}|#{book.year}")
+    book = Book.new(id, author, title, genre, year);
+    file.puts(book.to_json)
     puts "Livro cadastrado com sucesso!"
   end
 
