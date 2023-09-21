@@ -48,8 +48,8 @@ class BookInterface
     lines = file.readlines
       
     lines.each do |line|
-        puts line
-      end
+      puts line
+    end
   end
 
   def show_book(file)
@@ -59,8 +59,8 @@ class BookInterface
     lines = file.readlines
       
     lines.each do |line|
-        book_id, _, _, _, _ = line.chomp.split('|')
-        if book_id.to_i == id
+      book_id, _, _, _, _ = line.chomp.split('|')
+      if book_id.to_i == id
         return puts line
       end
     end
@@ -79,12 +79,12 @@ class BookInterface
       if book_id.to_i == id
         line_to_be_updated = line
         break  
+      end
     end
-  end
 
-  if (line_to_be_updated == nil) 
-    return puts "Livro não encontrado"
-  end
+    if (line_to_be_updated == nil) 
+      return puts "Livro não encontrado"
+    end
   
     puts "Opções:"
     puts "1 - id"
@@ -141,8 +141,5 @@ class BookInterface
     end
 
     return puts("Livro atualizado!")
-    
   end  
-
 end
-          
