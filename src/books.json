@@ -1,1 +1,16 @@
-{"id":1,"author":"José de Alencar","title":"Iracema","genre":"Romance","year":1875}
+[
+  {
+    "id": 1,
+    "author": "rai",
+    "title": "teste",
+    "genre": "edewde",
+    "year": 1929
+  },
+  {
+    "id": 2,
+    "author": "oasdkdkaso",
+    "title": "easdf",
+    "genre": "asdfg",
+    "year": 2323
+  }
+]

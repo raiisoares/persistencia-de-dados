@@ -1,3 +1,4 @@
+require 'json'
 require_relative 'book'
 
 class BookInterface
@@ -12,11 +13,23 @@ class BookInterface
     genre = gets.chomp
     print "Ano: "
     year = gets.chomp.to_i
-
-    book = Book.new(id, author, title, genre, year);
-    file.puts(book.to_json)
+  
+    begin
+      books = JSON.parse(file.read)
+    rescue JSON::ParserError
+      books = []
+    end
+    
+    book = Book.new(id, author, title, genre, year)
+    
+    books << JSON.parse(book.to_json)
+  
+    file.rewind
+    file.write(JSON.pretty_generate(books))
+  
     puts "Livro cadastrado com sucesso!"
   end
+  
 
   def remove_book_by_id(file)
     print "Informe o id do livro que será removido: "

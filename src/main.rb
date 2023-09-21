@@ -14,10 +14,10 @@ def main
 end
 
 def create_file
-  if File.exist?('./books.json')
-    File.open('./books.json', 'a+')
+  if File.exist?('books.json')
+    file = File.open('books.json', 'r+')
   else
-    File.new('./books.json', 'w+')
+    file = File.new('books.json', 'w+')
   end
 end
 

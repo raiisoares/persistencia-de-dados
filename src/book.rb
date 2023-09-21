@@ -1,3 +1,4 @@
+require 'json'
 class Book
   attr_accessor :id, :author, :title, :genre, :year
 
