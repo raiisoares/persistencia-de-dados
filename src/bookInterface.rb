@@ -30,32 +30,29 @@ class BookInterface
     puts "Livro cadastrado com sucesso!"
   end
   
-
   def remove_book_by_id(file)
+    begin
+      books = JSON.parse(file.read)
+    rescue JSON::ParserError
+      return puts("Não há nenhum livro cadastrado no banco de dados.")
+    end
+  
     print "Informe o id do livro que será removido: "
     id = gets.chomp.to_i
-    
-    book_removed = false
-    lines = file.readlines
-
-    file.rewind
-    file.truncate(0)
-
-    lines.each do |line|
-      book_id, _, _, _, _ = line.chomp.split('|')
-      if book_id.to_i != id
-        file.puts(line)
-      else
-        book_removed = true
-      end
-    end
-
-    if book_removed 
-      puts "\nLivro removido com sucesso!\n"
+  
+    book_to_be_removed = books.find { |book| book['id'] == id }
+  
+    if book_to_be_removed
+      books.delete(book_to_be_removed)
+      file.rewind
+      file.truncate(0)
+      file.write(JSON.pretty_generate(books))
+      puts "Livro removido com sucesso!"
     else
-      puts "\nLivro não encontrado!\n"
+      puts "Livro não encontrado!"
     end
   end
+  
 
   def index_books(file)
     lines = file.readlines
