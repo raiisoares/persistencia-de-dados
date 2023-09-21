@@ -53,7 +53,6 @@ class BookInterface
     end
   end
   
-
   def index_books(file)
     begin
       books = JSON.parse(file.read)
@@ -65,7 +64,6 @@ class BookInterface
       puts "#{book['id']}|#{book['author']}|#{book['title']}|#{book['genre']}|#{book['year']}"
     end
   end
-  
 
   def show_book(file)
     begin
@@ -86,24 +84,19 @@ class BookInterface
     end
   end
   
-
   def update_book(file)
+    begin
+      books = JSON.parse(file.read)
+    rescue JSON::ParserError
+      return puts("Não há nenhum livro cadastrado no banco de dados.")
+    end
+  
     print "Informe o id do livro que será atualizado: "
     id = gets.chomp.to_i
-
-    lines = file.readlines
-    line_to_be_updated = nil
-    line_updated = nil
-      
-    lines.each do |line|
-      book_id, _, _, _, _ = line.chomp.split('|')
-      if book_id.to_i == id
-        line_to_be_updated = line
-        break  
-      end
-    end
-
-    if (line_to_be_updated == nil) 
+  
+    book_to_be_updated = books.find { |book| book['id'] == id }
+  
+    if book_to_be_updated.nil?
       return puts "Livro não encontrado"
     end
   
@@ -116,54 +109,39 @@ class BookInterface
     puts "0 - Cancelar"
     print "Escolha o campo que será atualizado: "
     option = gets.chomp.to_i
-
+  
     case option
     when 1
       print "Informe o novo id: "
       new_id = gets.chomp.to_i
-      _, book_author, book_title, book_genre, book_year = line_to_be_updated.chomp.split('|')
-      line_updated = "#{new_id}|#{book_author}|#{book_title}|#{book_genre}|#{book_year}"
+      book_to_be_updated['id'] = new_id
     when 2
       print "Informe o novo Autor: "
       new_author = gets.chomp
-      book_id, _, book_title, book_genre, book_year = line_to_be_updated.chomp.split('|')
-      line_updated = "#{book_id}|#{new_author}|#{book_title}|#{book_genre}|#{book_year}"
+      book_to_be_updated['author'] = new_author
     when 3
       print "Informe o novo Título: "
       new_title = gets.chomp
-      book_id, book_author, _, book_genre, book_year = line_to_be_updated.chomp.split('|')
-      line_updated = "#{book_id}|#{book_author}|#{new_title}|#{book_genre}|#{book_year}"
+      book_to_be_updated['title'] = new_title
     when 4
       print "Informe o novo Gênero: "
       new_genre = gets.chomp
-      book_id, book_author, book_title, _, book_year = line_to_be_updated.chomp.split('|')
-      line_updated = "#{book_id}|#{book_author}|#{book_title}|#{new_genre}|#{book_year}"
+      book_to_be_updated['genre'] = new_genre
     when 5
       print "Informe o novo Ano: "
       new_year = gets.chomp.to_i
-      book_id, book_author, book_title, book_genre, _ = line_to_be_updated.chomp.split('|')
-      line_updated = "#{book_id}|#{book_author}|#{book_title}|#{book_genre}|#{new_year}"
+      book_to_be_updated['year'] = new_year
     when 0
       return puts "Operação cancelada"
     else
       puts "Opção inválida."
     end
-    
-    file.rewind
-    file.truncate(0)
-
-    lines.each do |line|
-      book_id, _, _, _, _ = line.chomp.split('|')
-      if book_id.to_i == id
-        file.puts(line_updated)
-      else
-        file.puts(line)
-      end
-    end
-
-    return puts("Livro atualizado!")
-  end 
   
+    file.rewind
+    file.write(JSON.pretty_generate(books))
+  
+    return puts("Livro atualizado!")
+  end
 
 
   def verify_file(file)
