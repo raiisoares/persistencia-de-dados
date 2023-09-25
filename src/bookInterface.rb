@@ -43,11 +43,13 @@ class BookInterface
     book_to_be_removed = books.find { |book| book['id'] == id }
   
     if book_to_be_removed
+      
       books.delete(book_to_be_removed)
       file.rewind
       file.truncate(0)
       file.write(JSON.pretty_generate(books))
-      puts "Livro removido com sucesso!"
+      puts "#{book_to_be_removed['title']} Foi removido com sucesso"
+      # puts "Livro removido com sucesso!"
     else
       puts "Livro não encontrado!"
     end
