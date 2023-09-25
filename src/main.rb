@@ -1,8 +1,6 @@
 require 'json'
 require_relative "bookInterface"
 
-#TODO: Interface para aplicação
-
 def main
   loop do
     controller = BookInterface.new

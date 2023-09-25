@@ -4,13 +4,69 @@
     "author": "José de Alencar",
     "title": "Iracema",
     "genre": "Romance",
-    "year": 1875
+    "year": 1865
   },
   {
     "id": 2,
-    "author": "gfasg",
-    "title": "gasfag",
-    "genre": "dasfg",
-    "year": 234
+    "author": "Anthony Burgess",
+    "title": "Laranja Mecânica",
+    "genre": "Distopia",
+    "year": 1962
+  },
+  {
+    "id": 3,
+    "author": "George Orwell",
+    "title": "1984",
+    "genre": "Distopia",
+    "year": 1949
+  },
+  {
+    "id": 4,
+    "author": "Herman Melville",
+    "title": "Moby Dick",
+    "genre": "Romance",
+    "year": 1851
+  },
+  {
+    "id": 5,
+    "author": "Aldous Huxley",
+    "title": "Admirável Mundo Novo",
+    "genre": "Distopia",
+    "year": 1932
+  },
+  {
+    "id": 6,
+    "author": "William Golding",
+    "title": "O Senhor das Moscas",
+    "genre": "Romance",
+    "year": 1954
+  },
+  {
+    "id": 7,
+    "author": "Machado de Assis",
+    "title": "Dom Casmurro",
+    "genre": "Romance",
+    "year": 1899
+  },
+  {
+    "id": 8,
+    "author": "Graciliano Ramos",
+    "title": "Vidas Secas",
+    "genre": "Romance",
+    "year": 1937
+  },
+  {
+    "id": 9,
+    "author": "Gabriel García Márquez",
+    "title": "O amor nos tempos do cólera",
+    "genre": "Romance",
+    "year": 1985
+  },
+  {
+    "id": 10,
+    "author": "José Saramago",
+    "title": "Ensaio sobre a Cegueira",
+    "genre": "Romance",
+    "year": 1995
   }
 ]

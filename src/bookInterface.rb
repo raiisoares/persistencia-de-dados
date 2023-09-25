@@ -2,6 +2,7 @@ require 'json'
 require_relative 'book'
 
 class BookInterface
+
   def create_book(file)
     print "id: "
     id = gets.chomp.to_i
@@ -26,34 +27,38 @@ class BookInterface
   
     file.rewind
     file.write(JSON.pretty_generate(books))
+    file.flush
+    file.close
   
     puts "Livro cadastrado com sucesso!"
   end
   
   def remove_book_by_id(file)
-    begin
-      books = JSON.parse(file.read)
-    rescue JSON::ParserError
-      return puts("Não há nenhum livro cadastrado no banco de dados.")
-    end
-  
-    print "Informe o id do livro que será removido: "
-    id = gets.chomp.to_i
-  
-    book_to_be_removed = books.find { |book| book['id'] == id }
-  
-    if book_to_be_removed
-      
-      books.delete(book_to_be_removed)
-      file.rewind
-      file.truncate(0)
-      file.write(JSON.pretty_generate(books))
-      puts "#{book_to_be_removed['title']} Foi removido com sucesso"
-      # puts "Livro removido com sucesso!"
-    else
-      puts "Livro não encontrado!"
-    end
+  begin
+    books = JSON.parse(file.read)
+  rescue JSON::ParserError
+    return puts("Não há nenhum livro cadastrado no banco de dados.")
   end
+
+  print "Informe o id do livro que será removido: "
+  id = gets.chomp.to_i
+
+  book_to_be_removed_index = books.find_index { |book| book['id'] == id }
+
+  if book_to_be_removed_index
+    book_to_be_removed = books.delete_at(book_to_be_removed_index)
+
+    file.rewind
+    file.truncate(0)
+    file.write(JSON.pretty_generate(books))
+    file.flush 
+
+    puts "#{book_to_be_removed['title']} Foi removido com sucesso"
+  else
+    puts "Livro não encontrado!"
+  end
+end
+
   
   def index_books(file)
     begin
@@ -61,9 +66,13 @@ class BookInterface
     rescue JSON::ParserError
       return puts("Não há nenhum livro cadastrado no banco de dados.")
     end
+
+    puts "Lista de Livros"
+    puts "ID | Autor | Título | Gênero | Ano"
+    puts "----------------------------------"
   
     books.each do |book|
-      puts "#{book['id']}|#{book['author']}|#{book['title']}|#{book['genre']}|#{book['year']}"
+      puts "#{book['id']} | #{book['author']} | #{book['title']} | #{book['genre']} | #{book['year']}"
     end
   end
 
@@ -80,7 +89,10 @@ class BookInterface
     book_to_be_showed = books.find { |book| book['id'] == id }
   
     if book_to_be_showed
-      puts "#{book_to_be_showed['id']}|#{book_to_be_showed['author']}|#{book_to_be_showed['title']}|#{book_to_be_showed['genre']}|#{book_to_be_showed['year']}"
+     puts "Detalhes do Livro"
+    puts "ID | Autor | Título | Gênero | Ano"
+    puts "----------------------------------"
+    puts "#{book_to_be_showed['id']} | #{book_to_be_showed['author']} | #{book_to_be_showed['title']} | #{book_to_be_showed['genre']} | #{book_to_be_showed['year']}"
     else
       puts "Livro não encontrado!"
     end
@@ -141,10 +153,11 @@ class BookInterface
   
     file.rewind
     file.write(JSON.pretty_generate(books))
+    file.flush
+    file.close
   
     return puts("Livro atualizado!")
   end
-
 
   def verify_file(file)
     begin
